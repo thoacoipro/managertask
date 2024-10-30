@@ -47,6 +47,9 @@ function fetchTasks() {
 
       tasks.forEach(task => {
         const isExpired = task.endDate < today;
+        const typeIcon = getTypeIcon(task.typeTask);
+
+
         const taskCard = `
           <div class="task-card ${isExpired ? 'expired-task' : ''}">
             <div class="task-title">${task.title}</div>
@@ -55,7 +58,10 @@ function fetchTasks() {
               <strong>Bắt đầu:</strong> ${task.startTime} <br>
               <strong>Kết thúc:</strong> ${task.endDate.toLocaleDateString()}
             </div>
-            <div class="task-type">${task.typeTask}</div>
+            <div class="task-type">
+            ${task.typeTask}
+            <img src="${typeIcon}" class="type-icon" alt="${task.typeTask}">
+            </div>
           </div>`;
         taskContainer.insertAdjacentHTML('beforeend', taskCard);
       });
@@ -64,6 +70,24 @@ function fetchTasks() {
       console.error("Lỗi khi lấy dữ liệu:", error);
     });
 }
+
+function getTypeIcon(typeTask) {
+    // Hàm trả về URL của icon dựa vào loại task
+    switch (typeTask.toLowerCase()) {
+      case 'shopping':
+        return 'images/trolley.png';
+      case 'Daily expenses':
+        return 'path/to/normal-icon.png';
+      case 'event':
+        return 'images/event.png';
+      case 'sports':
+        return 'images/running.png';
+      case 'travel':
+        return 'images/travel.png';
+      default:
+        return 'path/to/default-icon.png';
+    }
+  }
 
 function openGoogleForm() {
   window.open("https://docs.google.com/forms/d/e/1FAIpQLSeLrPl31p2lKM9vt7twBtDwHN7_bFAAKroJ3NKkz1-QCXnYJQ/viewform", "_blank");
