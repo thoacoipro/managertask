@@ -56,6 +56,7 @@ body {
     font-size: 14px;
     color: #555;
     margin-bottom: 10px;
+    margin-top: 20px;
   }
 
   .task-dates {
@@ -70,6 +71,25 @@ body {
     margin-top: 10px;
     text-align: right;
   }
+  .expired-task {
+    background-color: #ffcccc;
+    color: #ff0000;
+  }
+  .task-card {
+    position: relative;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .type-icon {
+    width: 40px;
+    height: auto;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
   .expired-task {
     background-color: #ffcccc;
     color: #ff0000;
