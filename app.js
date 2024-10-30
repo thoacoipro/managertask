@@ -77,7 +77,7 @@ function getTypeIcon(typeTask) {
       case 'shopping':
         return 'images/trolley.png';
       case 'Daily expenses':
-        return 'path/to/normal-icon.png';
+        return 'images/budget.png';
       case 'event':
         return 'images/event.png';
       case 'sports':
