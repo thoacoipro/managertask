@@ -76,7 +76,7 @@ function getTypeIcon(typeTask) {
     switch (typeTask.toLowerCase()) {
       case 'shopping':
         return 'images/trolley.png';
-      case 'Daily expenses':
+      case 'daily expenses':
         return 'images/budget.png';
       case 'event':
         return 'images/event.png';
