@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script class="u-script" type="text/javascript" src="app.js" defer=""></script>
-  <link rel="stylesheet" href="style.css" media="screen">
+  <script class="u-script" type="text/javascript" src="public/app.js" defer=""></script>
+  <link rel="stylesheet" href="public/style.css" media="screen">
   <title>Quản Lý Task</title>
 </head>
 <body>
-  <h1>Quản Lý Task</h1>
+  <h1 onclick="getnewtoken()">Quản Lý Task</h1>
   
-  <button id="addTaskButton" onclick="openGoogleForm()">Thêm Task Mới</button>
+  <button id="addTaskButton" onclick="window.location.href='add_task.html'">Thêm Task Mới</button>
   
   <div id="taskContainer">
     <!-- Các thẻ task sẽ được thêm vào đây -->

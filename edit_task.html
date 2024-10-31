@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="public/style.css">
+    <title>Chỉnh Sửa Task</title>
+</head>
+<body>
+    <div class="page-container">
+        <h1>Chỉnh Sửa Task</h1>
+        <form id="editTaskForm">
+            <label for="editTaskTitle">Tiêu Đề Task</label>
+            <input type="text" id="editTaskTitle" name="editTaskTitle" required>
+
+            <label for="editTaskContent">Nội Dung</label>
+            <textarea id="editTaskContent" name="editTaskContent" required></textarea>
+
+            <label for="editStartTime">Bắt Đầu</label>
+            <input type="date" id="editStartTime" name="editStartTime" required>
+
+            <label for="editEndTime">Kết Thúc</label>
+            <input type="date" id="editEndTime" name="editEndTime" required>
+
+            <label for="editTypeTask">Loại Task</label>
+            <select id="editTypeTask" name="editTypeTask" required>
+                <option value="shopping">Mua Sắm</option>
+                <option value="daily expenses">Chi Tiêu Hằng Ngày</option>
+                <option value="event">Sự Kiện</option>
+                <option value="sports">Thể Thao</option>
+                <option value="travel">Du Lịch</option>
+            </select>
+
+            <button type="submit">Lưu Thay Đổi</button>
+            <button type="button" onclick="goBack()">Quay Lại</button>
+        </form>
+    </div>
+
+    <script>
+        function goBack() {
+            window.location.href = "index.html";
+        }
+        document.getElementById('editTaskForm').onsubmit = function(event) {
+            event.preventDefault();
+            // Xử lý logic cập nhật task ở đây
+            alert("Thay đổi đã được lưu!");
+        };
+
+        function convertToDateInputFormat(dateString) {
+        if (dateString.includes('GMT')) { // Nếu dateString là một chuỗi đầy đủ của Date
+            const date = new Date(dateString);
+            return date.toISOString().split('T')[0]; // Lấy phần yyyy-MM-dd từ toISOString()
+        }
+        const [day, month, year] = dateString.split('/');
+        if (day && month && year) {
+            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+        }
+        return dateString;
+        }
+        
+        // Lấy dữ liệu từ URL và điền vào form
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            document.getElementById('editTaskTitle').value = params.get('title') || '';
+            document.getElementById('editTaskContent').value = params.get('content') || '';
+            // Chuyển đổi ngày và điền vào form
+            const startTime = params.get('startTime') || '';
+            const endTime = params.get('endTime') || '';
+            document.getElementById('editStartTime').value = convertToDateInputFormat(startTime);
+            document.getElementById('editEndTime').value = convertToDateInputFormat(endTime);
+            document.getElementById('editTypeTask').value = params.get('typeTask') || 'shopping';
+        }
+
+        document.getElementById('editTaskForm').onsubmit = function(event) {
+            event.preventDefault();
+            // Xử lý logic cập nhật task vào Google Sheets ở đây hoặc lưu lại
+            alert("Thay đổi đã được lưu!");
+            goBack(); // Quay lại trang quản lý task sau khi lưu
+        };
+
+        // Gọi hàm để điền dữ liệu vào form
+        window.onload = getQueryParams;
+    </script>
+</body>
+</html>

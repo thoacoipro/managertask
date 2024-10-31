@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="public/style.css">
+    <title>Thêm Task Mới</title>
+</head>
+<body>
+    <div class="page-container">
+        <h1>Thêm Task Mới</h1>
+        <form id="addTaskForm">
+            <label for="taskTitle">Tiêu Đề Task</label>
+            <input type="text" id="taskTitle" name="taskTitle" required>
+
+            <label for="taskContent">Nội Dung</label>
+            <textarea id="taskContent" name="taskContent" required></textarea>
+
+            <label for="startTime">Bắt Đầu</label>
+            <input type="date" id="startTime" name="startTime" required>
+
+            <label for="endTime">Kết Thúc</label>
+            <input type="date" id="endTime" name="endTime" required>
+
+            <label for="typeTask">Loại Task</label>
+            <select id="typeTask" name="typeTask" required>
+                <option value="shopping">Mua Sắm</option>
+                <option value="daily expenses">Chi Tiêu Hằng Ngày</option>
+                <option value="event">Sự Kiện</option>
+                <option value="sports">Thể Thao</option>
+                <option value="travel">Du Lịch</option>
+            </select>
+
+            <button type="submit">Thêm Task</button>
+            <button type="button" onclick="goBack()">Quay Lại</button>
+        </form>
+    </div>
+
+    <script>
+    
+    document.getElementById('addTaskForm').onsubmit = function(event) {
+        event.preventDefault();
+        const spreadsheetId = '1IQlptvWtIuEz6OYdV0O6V2otKCDvntouPMT28PK-1iM'; 
+        const range = 'A:F';
+        const accessToken = 'ya29.a0AeDClZDAuTLyCBBD_fU2ZDrjrrG34YzwzlwtviFy65THj2bagOkSKklPmZVe1_u942p_3_5xMz7bp12fLwwkff7nkplFEN3dneusJ71RHvb7wWiqyzcPq7aIgVnIsEyChktITi0YVtdlKmuYXCakfu7HG8394CDuPpFnuODNaCgYKAdASARISFQHGX2Mite_PnL-CMSg8Vx_WdfDMVg0175';
+        const title = document.getElementById('taskTitle').value;
+        const content = document.getElementById('taskContent').value;
+        const startTime = document.getElementById('startTime').value;
+        const endTime = document.getElementById('endTime').value;
+        const typeTask = document.getElementById('typeTask').value;
+        const id = Date.now();
+        const newRow = [[id,title,content,startTime, endTime, typeTask]];
+        const url1= `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}:append?valueInputOption=USER_ENTERED`;
+        fetch(url1, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${accessToken}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              values: newRow
+            })
+          })
+          .then(response => {
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            return response.json();
+          })
+          .then(data => {
+            console.log("Thêm dữ liệu thành công:", data);
+            alert("Thêm dữ liệu thành công");
+            goBack();
+          })
+          .catch(error => {
+            console.error("Lỗi:", error);
+          });
+    };
+    function goBack() {
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
